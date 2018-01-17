@@ -18,12 +18,12 @@ namespace GUNIT
         {
             Console.WriteLine("G-UNIT Banking \n");
             Console.WriteLine(
-                "1) Find kunde \n" +
-                "2) Opret kunde \n" +
-                "3) Slet kunde \n \n" +
+                "1) Opret kunde \n" +
+                "2) Find kunde \n" +
+                "3b) Slet kunde \n \n" +
                 "4) Find konto  \n" +
-                "5) Opret konto \n" +
-                "6) Slet konto  \n \n" +
+                "5b) Opret konto \n" +
+                "6b) Slet konto  \n \n" +
                 "7) Find transaktion \n \n");
             Console.Write("Indtast valg: ");
             string valg = Console.ReadLine();
@@ -32,13 +32,13 @@ namespace GUNIT
                 case "1":
                     break;
                 case "2":
-                    Database.OpretKunde();
+                    Kunde.OpretKunde();
                     Console.WriteLine("Ny kunde oprettet");
                     Menu();
                     //Database.OpretKonto();
                     break;
                 case "3":
-                    Database.SletKunde();
+                    Kunde.SletKunde();
                     Console.WriteLine("Kunde slettet");
                     Menu();
                     break;
@@ -51,6 +51,11 @@ namespace GUNIT
 
         }
 
+
+        static void OpretKunde()
+        {
+
+        }
 
         //Database.SQLkommando("INSERT INTO Kunde values('frede', '2018-01-17 08:11:45')");
     }
