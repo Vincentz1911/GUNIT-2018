@@ -18,6 +18,14 @@ namespace GUNIT
             int CPR = int.Parse(CPRString.Replace("-", "").Replace("/", ""));
             string SQLSend = "INSERT INTO Kunde values('" + navn + "', GetDate(), '', " + CPR + ")";
             Database.SQLkommando(SQLSend);
+
+            string SQLGet = "SELECT PK_kundenr from Kunde where CPR = "+ CPR + ";";
+            Database.SQLkommandoGet(SQLGet);
+            //Console.WriteLine(SQLGet);
+            //int Kundenr = int.Parse(SQLGet);
+            //Console.WriteLine("Der er blevet oprettet en kunde med navnet {0}, CPR {1} og kundenr {2}", navn, CPR, Kundenr);
+            Console.ReadKey();
+            Console.Clear();
         }
 
         public static void FindKunde(string valg)

@@ -11,7 +11,7 @@ namespace GUNIT
     {
         public static void SQLkommando(string sqltext)
         {
-            string ConnectionString = @"Data Source = skab3-pc-04; Initial Catalog = GUNIT; Integrated Security = True";
+            string ConnectionString = @"Data Source = (local); Initial Catalog = GUNIT; Integrated Security = True";
             var connection = new SqlConnection(ConnectionString);
             SqlCommand cmd;
             connection.Open();
@@ -21,7 +21,7 @@ namespace GUNIT
                 cmd = connection.CreateCommand();
                 cmd.CommandText = sqltext;
                 cmd.ExecuteNonQuery();
-                Console.ReadKey();
+                //Console.ReadKey();
             }
             catch (Exception e)
             {
@@ -36,5 +36,36 @@ namespace GUNIT
                 }
             }
         }
+
+
+        public static void SQLkommandoGet(string sqltext)
+        {
+            string ConnectionString = @"Data Source = (local); Initial Catalog = GUNIT; Integrated Security = True";
+            var connection = new SqlConnection(ConnectionString);
+            //SqlCommand cmd;
+            connection.Open();
+
+
+
+            using (SqlCommand command = new SqlCommand(sqltext, connection))
+            {
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            Console.WriteLine(reader.GetValue(i));
+                        }
+                        Console.WriteLine();
+                    }
+                }
+            }
+
+            {
+                connection.Close();
+            }
+        }
     }
 }
+
