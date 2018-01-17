@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace GUNIT
 {
-    class Metoder
-    {
-        static void FindKunde(string str)
-        {
+    class Metoder {
+        static void FindKunde(string str) {
             Database.SQLkommando(str);
         }
 
-
+        public static void OpretTransaktion(float beløb, int kontoNummer) {
+            string SQLSend = $"insert into Transaktion values (GETDATE(), {beløb}, {kontoNummer}); ";
+            Database.SQLkommando(SQLSend);
+        }
     }
 }
