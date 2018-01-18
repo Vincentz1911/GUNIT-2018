@@ -31,7 +31,7 @@ namespace GUNIT
                     Menu();
                     break;
                 case "2":
-                    Kunde.SletKunde();
+                    FindKundeMenu();
                     Menu();
                     break;
                 case "3":
@@ -41,6 +41,13 @@ namespace GUNIT
                     break;
             }
 
+        }
+
+        static void FindKundeMenu()
+        {
+            Console.Write("Søg på \n(1) Navn \n(2) konto \n(3) Kundenummer \n(4) CPR : ");
+            string valg = Console.ReadLine();
+            Kunde.FindKunde(valg);
         }
 
         //                "3b) Slet kunde \n \n" +

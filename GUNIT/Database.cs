@@ -9,6 +9,9 @@ namespace GUNIT
 {
     public static class Database
     {
+
+        public static string[] SQLArray = new string[0];
+
         public static void SQLkommando(string sqltext)
         {
             string ConnectionString = @"Data Source = (local); Initial Catalog = GUNIT; Integrated Security = True";
@@ -38,13 +41,15 @@ namespace GUNIT
         }
 
 
-        public static void SQLkommandoGet(string sqltext)
+        public static string[] SQLkommandoGet(string sqltext)
         {
+
             string ConnectionString = @"Data Source = (local); Initial Catalog = GUNIT; Integrated Security = True";
             var connection = new SqlConnection(ConnectionString);
             //SqlCommand cmd;
             connection.Open();
 
+            int count = 0;
 
 
             using (SqlCommand command = new SqlCommand(sqltext, connection))
@@ -55,9 +60,12 @@ namespace GUNIT
                     {
                         for (int i = 0; i < reader.FieldCount; i++)
                         {
-                            Console.WriteLine(reader.GetValue(i));
+                            Array.Resize(ref SQLArray, count + 1); // Udvider arrayet med en pr. gennemgang af felter
+                            SQLArray[count] = reader.GetValue(i).ToString();
+                            //Console.Write(reader.GetValue(i));
+                            count++;
                         }
-                        Console.WriteLine();
+                        //Console.WriteLine();
                     }
                 }
             }
@@ -65,6 +73,9 @@ namespace GUNIT
             {
                 connection.Close();
             }
+
+
+            return SQLArray;
         }
     }
 }
