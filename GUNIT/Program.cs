@@ -15,7 +15,7 @@ namespace GUNIT
             Menu();
         }
 
-        static void Menu()
+        public static void Menu()
         {
             Console.Write("G-UNIT Banking \n\n" + 
                 "1) Opret kunde \n" +

@@ -8,12 +8,12 @@ namespace GUNIT
 {
     class Metoder {
         static void FindKunde(string str) {
-            Database.SQLkommando(str);
+            Database.SQLkommandoSet(str);
         }
 
         public static void OpretTransaktion(float beløb, int kontoNummer) {
             string SQLSend = $"insert into Transaktion values (GETDATE(), {beløb}, {kontoNummer}); ";
-            Database.SQLkommando(SQLSend);
+            Database.SQLkommandoSet(SQLSend);
         }
     }
 }
