@@ -51,7 +51,7 @@ namespace GUNIT
 
 
             string SQLSend = $"IF exists (select 1 from Kunde where CPR = {CPRString}) insert into Konto values(0, GETDATE(), null, (select PK_kundenr from Kunde where CPR = {CPRString}) , {kontoType});";
-            Database.SQLkommando(SQLSend);
+            Database.SQLkommandoSet(SQLSend);
 
             Console.Write("Konto oprettet!");
 
@@ -68,7 +68,7 @@ namespace GUNIT
 
             string SQLSend = $"if exists (select 1 from Konto where PK_kontonr = {kontoNummer})  update Konto set kontoslutdato = GETDATE() where PK_kontonr = {kontoNummer};";
 
-            Database.SQLkommando(SQLSend);
+            Database.SQLkommandoSet(SQLSend);
 
             Console.Write($"Konto nummer {kontoNummer} slettet!");
 
@@ -83,7 +83,7 @@ namespace GUNIT
             string strBeløb = IndtastBeløb();
 
             string SQLSend = $"if exists (select 1 from Konto where PK_kontonr = {kontoNummer})  update Konto set saldo = saldo + {strBeløb} where PK_kontonr = {kontoNummer};";
-            Database.SQLkommando(SQLSend);
+            Database.SQLkommandoSet(SQLSend);
 
             string SQLGet = $"SELECT saldo from Konto where PK_kontonr = {kontoNummer};";
             string[] sum = Database.SQLkommandoGet(SQLGet);
@@ -103,7 +103,7 @@ namespace GUNIT
             string strBeløb = IndtastBeløb();
 
             string SQLSend = $"if exists (select 1 from Konto where PK_kontonr = {kontoNummer})  update Konto set saldo = saldo - {strBeløb} where PK_kontonr = {kontoNummer};";
-            Database.SQLkommando(SQLSend);
+            Database.SQLkommandoSet(SQLSend);
 
             string SQLGet = $"SELECT saldo from Konto where PK_kontonr = {kontoNummer};";
             string[] sum = Database.SQLkommandoGet(SQLGet);
@@ -124,10 +124,10 @@ namespace GUNIT
             string strBeløb = IndtastBeløb();
 
             string SQLSend = $"update Konto set saldo = saldo - {strBeløb} where PK_kontonr = {fraKonto};";
-            Database.SQLkommando(SQLSend);
+            Database.SQLkommandoSet(SQLSend);
 
             SQLSend = $"update Konto set saldo = saldo + {strBeløb} where PK_kontonr = {tilKonto};";
-            Database.SQLkommando(SQLSend);
+            Database.SQLkommandoSet(SQLSend);
 
             Console.WriteLine($"{strBeløb} overført fra kontonummer {fraKonto} til {tilKonto};");
 
@@ -180,7 +180,7 @@ namespace GUNIT
             public static void OpretTransaktion(string beløb, int kontoNummer)
         {
             string SQLSend = $"insert into Transaktion values (GETDATE(), {beløb}, {kontoNummer}); ";
-            Database.SQLkommando(SQLSend);
+            Database.SQLkommandoSet(SQLSend);
         }
     }
 }

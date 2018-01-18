@@ -17,6 +17,8 @@ namespace GUNIT
 
         public static void Menu()
         {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Clear();
             Console.Write("G-UNIT Banking \n\n" + 
                 "1) Opret kunde \n" +
                 "2) Find kunde \n" +

@@ -134,12 +134,17 @@ namespace GUNIT
                 string slutdato = "";
                 for (int i = 0; i < PK_kundenr.Length; i++)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write(i + " ");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.Write($"({i}) ");
                     //Sikrer at hvis der ikke er slutdato, skal den ikke vises
                     Console.ForegroundColor = ConsoleColor.White;
-                    if (kundeslutdato[i] != null) { slutdato = $"Slutdato: {kundeslutdato[i]}"; } else { slutdato = ""; }
-                    Console.WriteLine($"\nKundenr: {PK_kundenr[i]} - Kundenavn: {kundenavn[i]} - CPR: {CPR[i]} \nStartdato: {kundedato[i]} " + slutdato);
+                    if (kundeslutdato[i] != null)
+                    {
+                        slutdato = $"Slutdato: {kundeslutdato[i]}";
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                    }
+                    else { slutdato = "";}
+                    Console.WriteLine($"Kundenr: {PK_kundenr[i]} - Kundenavn: {kundenavn[i]} - CPR: {CPR[i]} \nStartdato: {kundedato[i]} " + slutdato);
                 }
             }
             else
