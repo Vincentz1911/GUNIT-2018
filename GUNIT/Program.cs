@@ -8,33 +8,38 @@ namespace GUNIT
 {
     class Program
     {
+        static string SQLSend;
+
         static void Main(string[] args)
         {
             Menu();
-            Console.ReadKey();
         }
 
         static void Menu()
         {
-            Console.WriteLine("G-UNIT Banking \n");
-            Console.WriteLine(
+            Console.Write("G-UNIT Banking \n\n" + 
                 "1) Opret kunde \n" +
                 "2) Find kunde \n" +
                 "3) Find konto  \n" +
-                "4) Find transaktion \n \n");
-            Console.Write("Indtast valg: ");
+                "4) Find transaktion \n" +
+                "5) Slet kunde \n\n" +
+                "Indtast valg: ");
             string valg = Console.ReadLine();
             switch (valg)
             {
                 case "1":
-                    Kunde.OpretKunde();
-                    Menu();
+                    Kunde.OpretKunde();                  
                     break;
                 case "2":
                     FindKundeMenu();
                     Menu();
                     break;
                 case "3":
+                    break;
+                case "4":
+                    break;
+                case "5":
+                    Kunde.SletKunde();
                     break;
 
                 default:
@@ -45,10 +50,12 @@ namespace GUNIT
 
         static void FindKundeMenu()
         {
-            Console.Write("Søg på \n(1) Navn \n(2) konto \n(3) Kundenummer \n(4) CPR : ");
+            Console.Clear();
+            Console.Write("Søg på \n1) Navn \n2) konto \n3) Kundenummer \n4) CPR \n\nIndtast valg : ");
             string valg = Console.ReadLine();
             Kunde.FindKunde(valg);
         }
+
 
         //                "3b) Slet kunde \n \n" +
 

@@ -12,24 +12,76 @@ namespace GUNIT
         static int[] PK_kundenr, CPR;
         static DateTime?[] kundedato, kundeslutdato;
         static string SQLSend;
+        static int CPRnr = 0;
+
+        static string[] SQLData;
+
+        static void KundeMenu(int kundenr)
+        {
+            SQLSend = "select * from Kunde where PK_kundenr like '" + kundenr + "'";
+            SQLData = Database.SQLkommandoGet(SQLSend);
+            int count = 0;
+            string text = "";
+            for (int i = 0; i < SQLData.Length; i += 5)
+            {
+                Array.Resize(ref PK_kundenr, count + 1);
+                Array.Resize(ref kundenavn, count + 1);
+                Array.Resize(ref kundedato, count + 1);
+                Array.Resize(ref kundeslutdato, count + 1);
+                Array.Resize(ref CPR, count + 1);
+
+                PK_kundenr[count] = int.Parse(SQLData[i]);
+                kundenavn[count] = SQLData[i + 1];
+                kundedato[count] = Convert.ToDateTime(SQLData[i + 2]);
+                if (SQLData[i + 3] != "")
+                { kundeslutdato[count] = Convert.ToDateTime(SQLData[i + 3]); }
+
+                CPR[count] = int.Parse(SQLData[i + 4]);
+                count++;
+            }
+
+            if (SQLData.Length != 0)
+            {
+                for (int i = 0; i < PK_kundenr.Length; i++)
+                {
+                    Console.WriteLine(i);
+                    if (kundeslutdato[i] != null)
+                    {
+                        text = "Slutdato: " + kundeslutdato[i];
+                    }
+                    else
+                    { text = ""; }
+                    Console.WriteLine("Kundenr: {0} Kundenavn: {1} CPR: {3} Oprettelsesdato: {2} " + text, PK_kundenr[i], kundenavn[i], kundedato[i], CPR[i]);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Ingen resultater fundet.");
+            }
+
+        }
+
 
         public static void OpretKunde()
         {
+            string CPRString;
             Console.Write("Indtast navn på ny kunde: ");
             string navn = Console.ReadLine();
-            Console.Write("Indtast CPR-nr: ");
-            string CPRString = Console.ReadLine();
-            int CPR = int.Parse(CPRString.Replace("-", "").Replace("/", ""));
-            string SQLSend = "INSERT INTO Kunde values('" + navn + "', GetDate(), '', " + CPR + ")";
+            do
+            {
+                Console.Write("Indtast CPR-nr: ");
+                CPRString = Console.ReadLine();
+                CPRString = CPRString.Replace("-", "").Replace("/", "");
+            } while (CPRString.Length != 10 && int.TryParse(CPRString, out CPRnr));
+
+            string SQLSend = "INSERT INTO Kunde values('" + navn + "', GetDate(), '', " + CPRnr + ")";
             Database.SQLkommando(SQLSend);
 
-            string SQLGet = "SELECT PK_kundenr from Kunde where CPR = " + CPR + ";";
-            Database.SQLkommandoGet(SQLGet);
-            //Console.WriteLine(SQLGet);
-            //int Kundenr = int.Parse(SQLGet);
-            //Console.WriteLine("Der er blevet oprettet en kunde med navnet {0}, CPR {1} og kundenr {2}", navn, CPR, Kundenr);
+            string SQLGet = "SELECT PK_kundenr from Kunde where CPR = " + CPRnr + ";";
+            SQLData = Database.SQLkommandoGet(SQLGet);
+
+            KundeMenu(int.Parse(SQLData[0]));
             Console.ReadKey();
-            Console.Clear();
         }
 
         public static void FindKunde(string valg)
@@ -57,9 +109,13 @@ namespace GUNIT
                     break;
 
                 case "4":
-                    Console.Write("Indtast søgning på CPR nr: ");
-                    str = Console.ReadLine();
-                    SQLSend = "select * from Kunde where CPR like '%" + str + "%'";
+                    do
+                    {
+                        Console.Write("Indtast søgning på CPR-nr: ");
+                        string CPRString = Console.ReadLine();
+                        CPRnr = int.Parse(CPRString.Replace("-", "").Replace("/", ""));
+                    } while (CPRnr.ToString().Length != 10);
+                    SQLSend = "select * from Kunde where CPR like '%" + CPRnr + "%'";
                     break;
 
                 default:
@@ -67,9 +123,10 @@ namespace GUNIT
 
             }
 
-            string[] SQLData = Database.SQLkommandoGet(SQLSend);
+            SQLData = Database.SQLkommandoGet(SQLSend);
             //Console.WriteLine(SQLData.Length);
             int count = 0;
+            string text = "";
             for (int i = 0; i < SQLData.Length; i += 5)
             {
                 Array.Resize(ref PK_kundenr, count + 1);
@@ -93,8 +150,13 @@ namespace GUNIT
                 for (int i = 0; i < PK_kundenr.Length; i++)
                 {
                     Console.WriteLine(i);
-                    Console.WriteLine("Kundenr: {0} Kundenavn: {1} Oprettelsesdato: {2} Slutdato {3} CPR {4}", PK_kundenr[i], kundenavn[i], kundedato[i], kundeslutdato[i], CPR[i]);
-
+                    if (kundeslutdato[i] != null)
+                    {
+                        text = "Slutdato: " + kundeslutdato[i];
+                    }
+                    else
+                    { text = ""; }
+                    Console.WriteLine("Kundenr: {0} Kundenavn: {1} CPR: {3} Oprettelsesdato: {2} " + text, PK_kundenr[i], kundenavn[i], kundedato[i], CPR[i]);
                 }
             }
             else
@@ -102,9 +164,8 @@ namespace GUNIT
                 Console.WriteLine("Ingen resultater fundet.");
             }
             Console.ReadLine();
-
         }
-        
+
         public static void SletKunde()
         {
             Console.Write("Indtast CPR-nr på kunde der skal slettes: ");
