@@ -13,7 +13,7 @@ namespace GUNIT
         static DateTime?[] kundedato, kundeslutdato;
         static string SQLSend, CPRString;
 
-        //******************* KUNDEMENU *******************
+        //************** **** KUNDEMENU *******************
         static void KundeMenu(int kundenr)
         {
             Console.Clear();
