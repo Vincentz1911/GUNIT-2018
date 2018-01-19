@@ -17,7 +17,7 @@ namespace GUNIT
         static void KundeMenu(int kundenr)
         {
             Console.Clear();
-            Console.WriteLine("**********\n*Kundemenu*\n***********");
+            Console.WriteLine("***********\n*Kundemenu*\n***********");
             SQLSend = "select * from Kunde where PK_kundenr like '" + kundenr + "'";
             SQLData = Database.SQLkommandoGet(SQLSend);
             ParseKunde(SQLData);
