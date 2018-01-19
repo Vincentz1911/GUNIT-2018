@@ -22,9 +22,6 @@ namespace GUNIT
             Console.Write("G-UNIT Banking \n\n" + 
                 "1) Opret kunde \n" +
                 "2) Find kunde \n" +
-                "3) Find konto  \n" +
-                "4) Find transaktion \n" +
-                "5) Slet kunde \n\n" +
                 "Indtast valg: ");
             string valg = Console.ReadLine();
             switch (valg)
@@ -36,21 +33,13 @@ namespace GUNIT
                     FindKundeMenu();
                     Menu();
                     break;
-                case "3":
-                    break;
-                case "4":
-                    break;
-                case "5":
-                    Kunde.SletKunde();
-                    break;
-
                 default:
                     break;
             }
 
         }
 
-        static void FindKundeMenu()
+        public static void FindKundeMenu()
         {
             Console.Clear();
             Console.Write("Søg på \n1) Navn \n2) konto \n3) Kundenummer \n4) CPR \n\nIndtast valg : ");

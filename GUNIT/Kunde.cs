@@ -14,7 +14,7 @@ namespace GUNIT
         static string SQLSend, CPRString;
 
         //************** **** KUNDEMENU *******************
-        static void KundeMenu(int kundenr)
+        public static void KundeMenu(int kundenr)
         {
             Console.Clear();
             Console.WriteLine("**********\n*Kundemenu*\n***********");
@@ -22,8 +22,23 @@ namespace GUNIT
             SQLData = Database.SQLkommandoGet(SQLSend);
             ParseKunde(SQLData);
 
-            Console.WriteLine("1) Opret konto \n2) Vælg aktiv konto\n3) Slet konto\n4) Indsæt beløb ");
-            Console.ReadKey();
+            Console.WriteLine("1) Opret konto\n2) Vælg konto\n3) Slet kunde\n ");
+            string valg = Console.ReadLine();
+
+            switch (valg) {
+                case "1":
+                    Konto.OpretKonto(kundenr);
+                    break;
+                case "2":
+                    Konto.VælgKonto(kundenr);
+                    break;
+                case "3":
+                    SletKunde();
+                    break;
+                default:
+                    break;
+            }
+            /// HER
         }
 
         //******************* OPRET KUNDE *******************
