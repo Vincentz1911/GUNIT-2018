@@ -36,13 +36,13 @@ namespace GUNIT
                 Console.Write("Indtast CPR-nr: ");
                 CPRString = Console.ReadLine();
                 CPRString = CPRString.Replace("-", "").Replace("/", "");
-            } while (CPRString.Length != 10 && int.TryParse(CPRString, out int CPRnr));
+            } while (CPRString.Length != 10 || !(Int64.TryParse(CPRString, out Int64 CPRnr)));
 
             //Sender data til database
-            string SQLSend = "INSERT INTO Kunde values('" + navn + "', GetDate(), '', " + CPRString + ")";
+            string SQLSend = $"INSERT INTO Kunde values('{navn}', GetDate(), '','{CPRString}')";
             Database.SQLkommandoSet(SQLSend);
             //Modtager kundenr fra database baseret på CPR nr
-            string SQLGet = "SELECT PK_kundenr from Kunde where CPR = " + CPRString + ";";
+            string SQLGet = $"SELECT PK_kundenr from Kunde where CPR = '{CPRString}';";
             SQLData = Database.SQLkommandoGet(SQLGet);
             //Starter kundemenu med kundenr
             KundeMenu(int.Parse(SQLData[0]));
@@ -101,9 +101,8 @@ namespace GUNIT
         public static void SletKunde()
         {
             Console.Write("Indtast CPR-nr på kunde der skal slettes: ");
-            string CPRString = Console.ReadLine();
-            int CPR = int.Parse(CPRString.Replace("-", ""));
-            string SQLSend = $"UPDATE Kunde set kundeslutdato = GetDate() where CPR = {CPR};";
+            string CPRString = Console.ReadLine();           
+            string SQLSend = $"UPDATE Kunde set kundeslutdato = GetDate() where CPR = '{CPR}';";
             Database.SQLkommandoSet(SQLSend);
         }
 

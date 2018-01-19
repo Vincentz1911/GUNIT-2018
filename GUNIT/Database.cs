@@ -11,7 +11,7 @@ namespace GUNIT
     {
         public static void SQLkommandoSet(string sqltext)
         {
-            string ConnectionString = @"Data Source = ADESK\SQLEXPRESS; Initial Catalog = GUNIT; Integrated Security = True";
+            string ConnectionString = @"Data Source = (LOCAL); Initial Catalog = GUNIT; Integrated Security = True";
             var connection = new SqlConnection(ConnectionString);
             SqlCommand cmd;
             connection.Open();
@@ -39,7 +39,7 @@ namespace GUNIT
         public static string[] SQLkommandoGet(string sqltext)
         {
             string[] SQLArray = new string[0];
-            string ConnectionString = @"Data Source = ADESK\SQLEXPRESS; Initial Catalog = GUNIT; Integrated Security = True";
+            string ConnectionString = @"Data Source = (LOCAL); Initial Catalog = GUNIT; Integrated Security = True";
             var connection = new SqlConnection(ConnectionString);
 
             connection.Open();
